@@ -1,14 +1,14 @@
 import path from 'path'
-import fs from 'fs'
 import http from 'http'
 
 import express from 'express'
-import cookieParser from 'cookie-parser'
+// import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
-
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
+import { makeExecutableSchema } from 'graphql-tools'
 import helmetMiddleware from 'helmet'
 
 import ejs from 'ejs'
@@ -19,14 +19,28 @@ import webpackDevConfig from './config/webpack/webpack.config'
 
 import reactInitialStateMiddleware from './lib/middlewares/initialState'
 
+import typeDefs from './schema'
+import resolvers from './resolvers'
+
+export const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers
+})
+
+const GRAPHQL_ENDPOINT = '/graphql'
+
 const app = express()
 const server = http.Server(app)
 
-app.use(helmetMiddleware())
+app.use(helmetMiddleware()) // helps you secure your Express apps by setting various HTTP headers
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieParser())
+// app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(cookieParser())
+
+app.use(GRAPHQL_ENDPOINT, bodyParser.json(), graphqlExpress({ schema }))
+
+app.use('/graphiql', graphiqlExpress({ endpointURL: GRAPHQL_ENDPOINT }))
 
 let webpackDevMiddlewareInstance
 
