@@ -1,0 +1,33 @@
+[ignore]
+<PROJECT_ROOT>/.history/.*
+<PROJECT_ROOT>/.vscode/.*
+<PROJECT_ROOT>/dist/.*
+<PROJECT_ROOT>/coverage/.*
+<PROJECT_ROOT>/migrations/.*
+<PROJECT_ROOT>/seeders/.*
+<PROJECT_ROOT>/tests/.*
+<PROJECT_ROOT>/vendor/.*
+<PROJECT_ROOT>/client/__tests__/.*
+
+[include]
+
+[libs]
+
+[lints]
+all=warn
+
+[options]
+module.name_mapper='.*\(.scss\)' -> 'empty/object'
+module.name_mapper='\/server\/' -> 'empty/object'
+module.name_mapper='^\(.*\)\/\(.*\)$' -> '<PROJECT_ROOT>/client/\1/\2'
+module.file_ext=.scss
+module.file_ext=.js
+module.file_ext=.jsx
+module.file_ext=.json
+esproposal.export_star_as=enable
+esproposal.class_instance_fields=enable
+esproposal.class_static_fields=enable
+experimental.const_params=true
+include_warnings=true
+
+[strict]
