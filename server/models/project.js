@@ -10,12 +10,28 @@ export default (sequelize, DataTypes) => {
           }
         }
       }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at'
     }
   })
 
   ProjectModel.associate = models => {
-    ProjectModel.hasMany(models.Task)
-    ProjectModel.belongsTo(models.User, { foreignKey: 'owner_id', as: 'owner' })
+    ProjectModel.hasMany(models.Task, { foreignKey: {
+      name: 'projectId',
+      field: 'project_id'
+    },
+    as: 'project'})
+    ProjectModel.belongsTo(models.User, { foreignKey: {
+      name: 'ownerId',
+      field: 'owner_id'
+    },
+    as: 'owner' })
   }
 
   return ProjectModel
