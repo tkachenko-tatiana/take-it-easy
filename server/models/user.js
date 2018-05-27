@@ -1,9 +1,8 @@
-export const publicFields = ['id', 'email', 'first_name', 'last_name', 'user_name', 'created_at', 'updated_at']
-
 export default (sequelize, DataTypes) => {
   const UserModel = sequelize.define('User', {
-    user_name: {
+    userName: {
       type: DataTypes.STRING(32),
+      field: 'user_name',
       allowNull: false,
       set (val) {
         this.setDataValue('user_name', val.toLowerCase())
@@ -67,31 +66,43 @@ export default (sequelize, DataTypes) => {
         }
       }
     },
-    first_name: {
+    firstName: {
       type: DataTypes.STRING(32),
+      field: 'first_name',
       allowNull: false,
       defaultValue: ''
     },
-    last_name: {
+    lastName: {
       type: DataTypes.STRING(32),
+      field: 'last_name',
       allowNull: false,
       defaultValue: ''
     },
-    activation_token: {
-      type: DataTypes.UUID
+    activationToken: {
+      type: DataTypes.UUID,
+      field: 'activation_token'
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: 'created_at'
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: 'updated_at'
     }
   }, {
     indexes: [
       { unique: true, fields: ['user_name'] },
       { unique: true, fields: ['email'] }
-    ],
-    defaultScope: {
-      attributes: publicFields
-    }
+    ]
   })
 
   UserModel.associate = models => {
-    UserModel.hasMany(models.Project)
+    UserModel.hasMany(models.Project, { foreignKey: {
+      name: 'ownerId',
+      field: 'owner_id'
+    },
+    as: 'owner' })
   }
 
   return UserModel
