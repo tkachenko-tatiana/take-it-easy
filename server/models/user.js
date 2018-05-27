@@ -1,3 +1,5 @@
+import * as hooks from './hooks/user'
+
 export default (sequelize, DataTypes) => {
   const UserModel = sequelize.define('User', {
     userName: {
@@ -5,7 +7,7 @@ export default (sequelize, DataTypes) => {
       field: 'user_name',
       allowNull: false,
       set (val) {
-        this.setDataValue('user_name', val.toLowerCase())
+        this.setDataValue('userName', val.toLowerCase())
       },
       validate: {
         required (value) {
@@ -91,6 +93,7 @@ export default (sequelize, DataTypes) => {
       field: 'updated_at'
     }
   }, {
+    hooks,
     indexes: [
       { unique: true, fields: ['user_name'] },
       { unique: true, fields: ['email'] }
