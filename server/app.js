@@ -9,6 +9,8 @@ import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import { makeExecutableSchema } from 'graphql-tools'
+import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas'
+
 import helmetMiddleware from 'helmet'
 
 import ejs from 'ejs'
@@ -19,8 +21,11 @@ import webpackDevConfig from './config/webpack/webpack.config'
 
 import reactInitialStateMiddleware from './lib/middlewares/initialState'
 
-import typeDefs from './schema'
-import resolvers from './resolvers'
+import models from './models'
+
+const typeDefs = mergeTypes(fileLoader(path.join(__dirname, './schemas')))
+
+const resolvers = mergeResolvers(fileLoader(path.join(__dirname, './resolvers')))
 
 export const schema = makeExecutableSchema({
   typeDefs,
@@ -38,7 +43,15 @@ app.use(helmetMiddleware()) // helps you secure your Express apps by setting var
 // app.use(bodyParser.urlencoded({ extended: false }))
 // app.use(cookieParser())
 
-app.use(GRAPHQL_ENDPOINT, bodyParser.json(), graphqlExpress({ schema }))
+app.use(
+  GRAPHQL_ENDPOINT,
+  bodyParser.json(),
+  graphqlExpress({
+    schema,
+    context: {
+      models
+    }
+  }))
 
 app.use('/graphiql', graphiqlExpress({ endpointURL: GRAPHQL_ENDPOINT }))
 
