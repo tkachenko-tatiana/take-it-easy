@@ -8,6 +8,7 @@
 <PROJECT_ROOT>/tests/.*
 <PROJECT_ROOT>/vendor/.*
 <PROJECT_ROOT>/client/__tests__/.*
+<PROJECT_ROOT>/node_modules/config-chain/test/broken.json
 
 [include]
 
@@ -28,6 +29,6 @@ esproposal.export_star_as=enable
 esproposal.class_instance_fields=enable
 esproposal.class_static_fields=enable
 experimental.const_params=true
-include_warnings=true
+include_warnings=false
 
 [strict]

@@ -1,0 +1,7 @@
+{
+  "coverage-gutters.lcovname": "./coverage/client/lcov.info",
+  "javascript.validate.enable": false,
+  "flow.useNPMPackagedFlow": true,
+  "flow.showStatus": true,
+  "eslint.alwaysShowStatus": true
+}
