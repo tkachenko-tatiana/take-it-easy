@@ -4,7 +4,8 @@ import { Route } from 'react-router'
 import { BrowserRouter, Switch } from 'react-router-dom'
 
 import Layout from './layout/Layout'
-import Registration from './routes/Registration/Registration'
+import SignUp from './routes/SignUp/SignUpContainer'
+// import SignIn from './routes/SignIn/SignInContainer'
 import SplashPage from './routes/SplashPage/SplashPage'
 
 const App = () => (
@@ -12,7 +13,8 @@ const App = () => (
     <Layout>
       <Switch>
         <Route path="/" component={SplashPage} exact/>
-        <Route path="/registration" title="Registration" component={Registration}/>
+        <Route path="/sign-up" title="Sign Up" component={SignUp}/>
+        {/* <Route path="/sign-in" title="Sign In" component={SignIn}/> */}
       </Switch>
     </Layout>
   </BrowserRouter>

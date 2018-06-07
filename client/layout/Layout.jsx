@@ -27,7 +27,7 @@ export class Layout extends PureComponent<Props, State> {
 
   render () {
     return (
-      <div>
+      <div className={styles.app}>
         <Navbar
           leftButtonClick={() => {}}
         />

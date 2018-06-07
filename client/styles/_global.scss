@@ -1,0 +1,55 @@
+@import '_settings.scss';
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.hidden {
+  display: none;
+}
+
+.no-decoration {
+  text-decoration: none;
+}
+
+.text-primary {
+  color: $primary-color;
+}
+
+.text-link {
+  @extend .no-decoration;
+  color: $title-color;
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.spinner {
+  display: block;
+  margin: 40px auto;
+}
+
+.mui-table-disable-padding {
+  td, th {
+    padding: 0 0 0 24px;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  main {
+    display: block;
+  }
+}
