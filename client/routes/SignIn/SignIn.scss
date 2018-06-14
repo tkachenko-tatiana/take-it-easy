@@ -1,0 +1,38 @@
+.singInPage {
+  width: 100vw;
+  height: 90vh;
+
+  .container {
+    padding: 15px;
+    max-width: 320px;
+    margin: 40px auto;
+    right: 0;
+    left: 0;
+    top: 20%;
+    position: absolute;
+
+
+    .signInForm {
+      display: flex;
+      flex-direction: column;
+
+      .singInBtn {
+        margin: 20px 0;
+      }
+    }
+
+    .textField {
+      padding-top: 10px;
+
+      > * {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .container {
+    width: 320px;
+  }
+}
