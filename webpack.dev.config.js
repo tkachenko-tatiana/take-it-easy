@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  mode: 'development',
   entry: {
     app: [
       'webpack-hot-middleware/client',

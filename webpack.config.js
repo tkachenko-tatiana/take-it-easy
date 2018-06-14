@@ -2,6 +2,7 @@ const merge = require('webpack-merge')
 const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin')
 const webpack = require('webpack')
 
 const babelPlugins = [
@@ -16,23 +17,26 @@ module.exports = env => {
   const reactHotLoaderPlugin = 'react-hot-loader/babel'
 
   const base = {
-    context: path.resolve(__dirname, '..', '..', '..', 'client'),
+    context: path.resolve(__dirname, 'client'),
 
     output: {
       filename: '[name]-[hash:8].js',
-      path: path.resolve(__dirname, '..', '..', '..', 'dist', 'public', 'assets'),
-      publicPath: '/assets/'
+      chunkFilename: '[name]-[hash:8].js',
+      path: path.resolve(__dirname, 'dist', 'public', 'assets'),
+      publicPath: '/assets/',
+      jsonpFunction: 'wpj'
     },
 
     resolve: {
       extensions: ['.jsx', '.json', '.js'],
-      modules: [path.resolve(__dirname, '..', '..', '..', 'client'), 'node_modules']
+      modules: [path.resolve(__dirname, 'client'), 'node_modules']
     },
 
     module: {
       rules: [
-        { test: /\.json$/, use: ['json-loader'] },
+        { test: /manifest\.json$/, use: ['file-loader'] },
         { test: /\.(png|svg|jpg|gif|ico)$/, use: ['file-loader'] },
+        { test: /\.(woff|woff2|eot|ttf|otf)$/, use: ['file-loader'] },
         {
           test: /\.css$/,
           use: [{
@@ -94,9 +98,12 @@ module.exports = env => {
         template: 'index.ejs.ejs',
         filename: 'index.ejs'
       }),
+      new DynamicCdnWebpackPlugin(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ]
   }
 
   return merge.smart(base, envConfig)
 }
+
+module.exports.babelPlugins = babelPlugins

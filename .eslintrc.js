@@ -33,7 +33,7 @@ module.exports = {
     "settings": {
       "import/resolver": {
         "webpack": {
-          "config": path.resolve(__dirname, 'server', 'config', 'webpack', 'webpack.config.js')
+          "config": path.resolve(__dirname, 'webpack.config.js')
         }
       },
       "react": {
