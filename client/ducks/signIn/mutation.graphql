@@ -1,0 +1,11 @@
+mutation signInMutation($userName: String!, $password: String!) {
+    signIn(userName: $userName, password: $password) {
+      success
+      user {
+        id
+        userName
+      }
+      token
+      refreshToken
+    }
+  }
