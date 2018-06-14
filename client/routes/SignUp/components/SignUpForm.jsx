@@ -33,7 +33,7 @@ export class SignUpForm extends PureComponent<Props> {
             onSubmit={handleSubmit}
             className={styles.signUpForm}
           >
-            <h2> Sign In </h2>
+            <h2> Sign Up </h2>
 
             <div className={styles.textField}>
               <Field
