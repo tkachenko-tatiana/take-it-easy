@@ -6,6 +6,7 @@ export default {
     allUsers: (parent, args, { models }) => models.User.findAll()
   },
   Mutation: {
-    register: (parent, args) => UserManager.register(args)
+    register: (parent, args) => UserManager.register(args),
+    signIn: (parent, args) => UserManager.signIn(args)
   }
 }

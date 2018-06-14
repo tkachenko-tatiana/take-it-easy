@@ -17,7 +17,7 @@ import ejs from 'ejs'
 
 import routes from './controllers'
 
-import webpackDevConfig from './config/webpack/webpack.config'
+import webpackDevConfig from '../webpack.config'
 
 import reactInitialStateMiddleware from './lib/middlewares/initialState'
 

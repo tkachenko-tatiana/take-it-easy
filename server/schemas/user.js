@@ -18,7 +18,22 @@ export default `
     allUsers: [User!]!
   }
 
+  type RegisterResponse {
+    success: Boolean!
+    user: User
+    errors: [Error!]
+  }
+
+  type SignInResponse {
+    success: Boolean!
+    user: User
+    token: String
+    refreshToken: String
+    errors: [Error!]
+  }
+
   type Mutation {
-    register(userName: String!, email: String!, password: String!): User!
+    register(userName: String!, email: String!, password: String!): RegisterResponse!
+    signIn(userName: String!, password: String!): SignInResponse!
   }
 `
