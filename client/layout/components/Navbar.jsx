@@ -10,21 +10,18 @@ import Link from 'react-router-dom/Link'
 
 import UserProfile from './UserProfile'
 
-import { isAuthorisedUser, getAuthInfo } from 'utils/auth'
-
 import logo from '../../../public/assets/TakeItEasy.jpg'
 import styles from '../Layout.scss'
 
 class Navbar extends Component {
   static propTypes = {
     leftButtonClick: PropTypes.func,
-    toShiftContent: PropTypes.bool
+    toShiftContent: PropTypes.bool,
+    user: PropTypes.object,
+    authLogout: PropTypes.func
   }
 
   render () {
-    const isAuthorised = isAuthorisedUser()
-    const user = getAuthInfo()
-
     return (
       <AppBar
         color="inherit"
@@ -33,7 +30,7 @@ class Navbar extends Component {
       >
         <Toolbar>
           {
-            isAuthorised
+            this.props.user
               ? (
                 <IconButton
                   aria-label="Drawer"
@@ -59,7 +56,8 @@ class Navbar extends Component {
 
           <UserProfile
             className={styles.rightDropdown}
-            user={user}
+            user={this.props.user}
+            authLogout={this.props.authLogout}
           />
 
         </Toolbar>

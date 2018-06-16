@@ -11,9 +11,9 @@ import Link from 'react-router-dom/Link'
 import styles from '../Layout.scss'
 
 type Props = {
-  user: any;
-  logout: () => void;
+  user: any; // add correct type
   addTask: () => void;
+  authLogout: () => void;
 };
 
 export class UserProfile extends PureComponent<Props> {
@@ -38,7 +38,7 @@ export class UserProfile extends PureComponent<Props> {
                   <Icon> person </Icon> { this.props.user.userName }
                 </Button>
 
-                <Button id="logout-btn" onClick={this.props.logout}> Logout </Button>
+                <Button id="logout-btn" onClick={this.props.authLogout}> Logout </Button>
               </span>
             )
             : (

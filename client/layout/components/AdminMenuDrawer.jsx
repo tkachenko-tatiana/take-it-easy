@@ -49,13 +49,13 @@ export class AdminMenuDrawer extends PureComponent {
         </div>
 
         <List className={styles.list}>
-          <Link to="/admin/inbox" className='text-link'>
+          <Link to="/api/inbox" className='text-link'>
             <ListItem button>
               <Icon>inbox</Icon>
               Inbox
             </ListItem>
           </Link>
-          <Link to="/admin/today" className='text-link'>
+          <Link to="/api/today" className='text-link'>
             <ListItem button>
               <Icon>today</Icon>
               Today

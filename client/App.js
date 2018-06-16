@@ -16,7 +16,7 @@ const App = () => (
         <Route path="/" component={SplashPage} exact/>
         <Route path="/sign-up" title="Sign Up" component={SignUp}/>
         <Route path="/sign-in" title="Sign In" component={SignIn}/>
-        <Route path="/admin" component={ApiRoutes} redirect="/"/>
+        <Route path="/api" component={ApiRoutes} redirect="/"/>
       </Switch>
     </Layout>
   </BrowserRouter>

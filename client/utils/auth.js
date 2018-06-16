@@ -1,9 +1,7 @@
 
 import jwt from 'jsonwebtoken'
 
-export const isAuthorisedUser = () => {
-  const token = localStorage.getItem('token')
-  const refreshToken = localStorage.getItem('refreshToken')
+export const isAuthorisedUser = (token, refreshToken) => {
   try {
     jwt.decode(token)
     const { exp } = jwt.decode(refreshToken)
@@ -18,14 +16,12 @@ export const isAuthorisedUser = () => {
   return true
 }
 
-export const getAuthInfo = () => {
-  const token = localStorage.getItem('token')
+export const getAuthUserInfo = (authInfo) => {
+  const { token, refreshToken, identity } = authInfo
 
-  try {
-    const { user } = jwt.decode(token)
-    return user
-  } catch (err) {
-    // clear local storage
-    return null
+  if (isAuthorisedUser(token, refreshToken)) {
+    return identity
   }
+
+  return null
 }
