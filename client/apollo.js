@@ -2,44 +2,28 @@ import { ApolloClient } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import authInfo from 'utils/auth'
+import fetch from 'services/fetch'
 
 const cache = new InMemoryCache()
 
-const httpLink = new HttpLink({ uri: '/graphql' })
+const httpLink = new HttpLink({
+  uri: '/graphql',
+  fetch
+})
 
 const middlewareAuthLink = new ApolloLink((operation, forward) => {
-  const token = localStorage.getItem('token')
-  const refreshToken = localStorage.getItem('refreshToken')
+  const { token } = authInfo.getTokens()
 
   operation.setContext({
     headers: {
-      'x-token': token ? `Bearer ${token}` : null,
-      'x-refresh-token': refreshToken ? `Bearer ${token}` : null
+      'authorization': token && `Bearer ${token}`
     }
   })
   return forward(operation)
 })
 
-const afterwareLink = new ApolloLink((operation, forward) =>
-  forward(operation).map((response) => {
-    const { response: { headers } } = operation.getContext()
-    if (headers) {
-      const token = headers.get('x-token')
-      const refreshToken = headers.get('x-refresh-token')
-
-      if (token) {
-        localStorage.setItem('token', token)
-      }
-
-      if (refreshToken) {
-        localStorage.setItem('refreshToken', refreshToken)
-      }
-    }
-
-    return response
-  }))
-
 export default new ApolloClient({
-  link: ApolloLink.from([afterwareLink, middlewareAuthLink, httpLink]),
+  link: ApolloLink.from([middlewareAuthLink, httpLink]),
   cache
 })

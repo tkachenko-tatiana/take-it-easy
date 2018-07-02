@@ -12,12 +12,10 @@ export default class ApiLayout extends React.PureComponent {
   render () {
     return (
       <div className={styles.adminMain}>
-        <div className={styles.adminContent}>
-          <Switch>
-            <Route path="/api/inbox" component={InboxContainer}/>
-            <Route path="/api/today" component={TodayTasksContainer}/>
-          </Switch>
-        </div>
+        <Switch>
+          <Route path="/api/inbox" component={InboxContainer}/>
+          <Route path="/api/today" component={TodayTasksContainer}/>
+        </Switch>
       </div>
     )
   }

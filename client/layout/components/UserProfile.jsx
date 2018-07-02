@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Fragment, PureComponent } from 'react'
+import { connect } from 'react-redux'
 import classnames from 'classnames'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -8,11 +9,15 @@ import Icon from '@material-ui/core/Icon'
 
 import Link from 'react-router-dom/Link'
 
+import authInfo from 'utils/auth'
+import { authLogout } from 'ducks/signIn'
 import styles from '../Layout.scss'
 
+import type AuthUser from 'ducks/signIn'
+
 type Props = {
-  user: any; // add correct type
-  addTask: () => void;
+  user: AuthUser;
+  openTaskForm: () => void;
   authLogout: () => void;
 };
 
@@ -25,7 +30,7 @@ export class UserProfile extends PureComponent<Props> {
             ? (
               <span className={styles.rightDropdown}>
                 <IconButton
-                  onClick={this.props.addTask}
+                  onClick={this.props.openTaskForm}
                 >
                   <Icon> add </Icon>
                 </IconButton>
@@ -58,4 +63,10 @@ export class UserProfile extends PureComponent<Props> {
   }
 }
 
-export default UserProfile
+const mapStateToProps = ({ auth }) => ({
+  user: authInfo.getAuthUserInfo(auth)
+})
+
+const mapDispatchToProps = { authLogout }
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile)

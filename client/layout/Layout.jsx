@@ -7,29 +7,36 @@ import { connect } from 'react-redux'
 
 import Navbar from './components/Navbar'
 import AdminMenuDrawer from './components/AdminMenuDrawer'
-import { getAuthUserInfo } from 'utils/auth'
+import TaskForm from '_shared/TaskForm'
+
+import authInfo from 'utils/auth'
 import styles from './Layout.scss'
-import { authLogout } from 'ducks/signIn'
 
 import type { Node } from 'react'
+import type AuthUser from 'ducks/signIn'
 
 type Props = {
   children: Node;
-  user: any; // add correct type
-  authLogout: () => void;
+  user: AuthUser;
 };
 
 type State = {
-  isDrawerOpen: boolean
+  isDrawerOpen: boolean;
+  isTaskFormOpen: boolean;
 };
 
 export class Layout extends PureComponent<Props, State> {
   state = {
-    isDrawerOpen: false
+    isDrawerOpen: false,
+    isTaskFormOpen: false
   }
 
   toggleDrawer = () => {
     this.setState({ isDrawerOpen: !this.state.isDrawerOpen })
+  }
+
+  switchTaskForm = () => {
+    this.setState({ isTaskFormOpen: !this.state.isTaskFormOpen })
   }
 
   render () {
@@ -39,7 +46,7 @@ export class Layout extends PureComponent<Props, State> {
           leftButtonClick={this.toggleDrawer}
           toShiftContent={this.state.isDrawerOpen}
           user={this.props.user}
-          authLogout={this.props.authLogout}
+          switchTaskForm={this.switchTaskForm}
         />
 
         <AdminMenuDrawer
@@ -51,18 +58,21 @@ export class Layout extends PureComponent<Props, State> {
           { this.props.children }
         </main>
 
+        <TaskForm
+          open={this.state.isTaskFormOpen}
+          onClose={this.switchTaskForm}
+        />
+
       </div>
     )
   }
 }
 
 const mapStateToProps = ({ auth }) => ({
-  user: getAuthUserInfo(auth)
+  user: authInfo.getAuthUserInfo(auth)
 })
-
-const mapDispatchToProps = { authLogout }
 
 export default compose(
   withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps)
 )(Layout)

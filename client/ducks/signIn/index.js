@@ -1,8 +1,15 @@
+// @flow
+
 import { createAction, handleActions } from 'redux-actions'
 
 export const authSuccess = createAction('AUTH_SUCCESS')
 export const authFailure = createAction('AUTH_FAILURE')
 export const authLogout = createAction('AUTH_LOGOUT')
+
+export type AuthUser = {
+  id: number;
+  userName: string;
+}
 
 const initialState = {
   identity: null,

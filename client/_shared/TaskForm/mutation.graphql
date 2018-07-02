@@ -1,0 +1,9 @@
+mutation createTask($name: String!, $projectId: String!) {
+    createTask(name: $name, projectId: $projectId) {
+      success,
+      task {
+        id
+        name
+      }
+    }
+  }

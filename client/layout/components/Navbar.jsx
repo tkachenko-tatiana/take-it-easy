@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+// @flow
+
+import React, { PureComponent } from 'react'
 import classnames from 'classnames'
 
 import Icon from '@material-ui/core/Icon'
@@ -13,12 +14,18 @@ import UserProfile from './UserProfile'
 import logo from '../../../public/assets/TakeItEasy.jpg'
 import styles from '../Layout.scss'
 
-class Navbar extends Component {
+import type AuthUser from 'ducks/signIn'
+
+type Props = {
+  leftButtonClick: () => void;
+  toShiftContent: boolean;
+  user: AuthUser;
+  switchTaskForm: () => void
+}
+
+class Navbar extends PureComponent<Props> {
   static propTypes = {
-    leftButtonClick: PropTypes.func,
-    toShiftContent: PropTypes.bool,
-    user: PropTypes.object,
-    authLogout: PropTypes.func
+
   }
 
   render () {
@@ -56,8 +63,7 @@ class Navbar extends Component {
 
           <UserProfile
             className={styles.rightDropdown}
-            user={this.props.user}
-            authLogout={this.props.authLogout}
+            openTaskForm={this.props.switchTaskForm}
           />
 
         </Toolbar>

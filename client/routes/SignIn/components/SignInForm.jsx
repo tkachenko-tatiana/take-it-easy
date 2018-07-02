@@ -1,7 +1,6 @@
 // @flow
 
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 
 import { Formik, Field } from 'formik'
 
@@ -19,10 +18,6 @@ type Props = {
 };
 
 export class SignInForm extends PureComponent<Props> {
-  static propTypes = {
-    handleSubmit: PropTypes.func
-  }
-
   render () {
     return (
       <Formik
@@ -73,7 +68,6 @@ export class SignInForm extends PureComponent<Props> {
           </form>
         )}
       </Formik>
-
     )
   }
 }

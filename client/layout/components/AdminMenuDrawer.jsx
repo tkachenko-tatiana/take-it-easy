@@ -1,5 +1,6 @@
+// @flow
+
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import IconButton from '@material-ui/core/IconButton'
@@ -11,12 +12,12 @@ import Link from 'react-router-dom/Link'
 import logo from '../../../public/assets/TakeItEasy.jpg'
 import styles from '../Layout.scss'
 
-export class AdminMenuDrawer extends PureComponent {
-  static propTypes = {
-    isOpen: PropTypes.bool,
-    toggleDrawer: PropTypes.func
-  }
+type Props = {
+  isOpen: boolean;
+  toggleDrawer: () => void;
+}
 
+export class AdminMenuDrawer extends PureComponent<Props> {
   render () {
     return (
       <SwipeableDrawer

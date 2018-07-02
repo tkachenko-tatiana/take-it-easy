@@ -5,13 +5,11 @@ export const SECRET_2 = 'GTD_app_36'
 
 export default class TokenHelper {
   static createToken (user) {
-    const secret = user.password + SECRET
-    return jwt.sign({ user }, secret, { expiresIn: '1h' })
+    return jwt.sign({ user }, SECRET, { expiresIn: 60 })
   }
 
   static createRefreshToken (user) {
-    const secret = user.password + SECRET_2
-    return jwt.sign({ user }, secret, { expiresIn: '7d' })
+    return jwt.sign({ user }, SECRET_2, { expiresIn: '7d' })
   }
 
   static refreshTokens () {

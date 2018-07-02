@@ -2,7 +2,7 @@ import path from 'path'
 import http from 'http'
 
 import express from 'express'
-// import cookieParser from 'cookie-parser'
+import jwt from 'express-jwt'
 import bodyParser from 'body-parser'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
@@ -20,6 +20,8 @@ import routes from './controllers'
 import webpackDevConfig from '../webpack.config'
 
 import reactInitialStateMiddleware from './lib/middlewares/initialState'
+import errorHandlerMiddleware from './lib/middlewares/errorHandler'
+import { SECRET } from './lib/token'
 
 import models from './models'
 
@@ -39,19 +41,27 @@ const server = http.Server(app)
 
 app.use(helmetMiddleware()) // helps you secure your Express apps by setting various HTTP headers
 
-// app.use(bodyParser.json())
-// app.use(bodyParser.urlencoded({ extended: false }))
-// app.use(cookieParser())
+const auth = jwt({
+  secret: SECRET,
+  credentialsRequired: false,
+  requestProperty: 'auth'
+})
 
 app.use(
   GRAPHQL_ENDPOINT,
   bodyParser.json(),
-  graphqlExpress({
-    schema,
-    context: {
-      models
-    }
-  }))
+  auth,
+  graphqlExpress(req => {
+    return ({
+      schema,
+      context: {
+        models,
+        auth: { isAuthenticated: !!req.auth },
+        user: req.auth && req.auth.user
+      }
+    })
+  })
+)
 
 app.use('/graphiql', graphiqlExpress({ endpointURL: GRAPHQL_ENDPOINT }))
 
@@ -93,7 +103,7 @@ if (process.env.NODE_ENV === 'development') {
 
 }
 
-// app.use(errorHandlerMiddleware)
+app.use(errorHandlerMiddleware)
 
 export {
   webpackDevMiddlewareInstance
